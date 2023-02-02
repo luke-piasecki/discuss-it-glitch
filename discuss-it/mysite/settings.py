@@ -26,8 +26,14 @@ SECRET_KEY = 'django-insecure-c03xfc_y^u(z%ds-b0ds0&g3sr!gwj1k0bmg#dsca7mn!is4k8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+#I don't fucking know what this does
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
 #ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.1.254']
-ALLOWED_HOSTS = [os.getenv('PROJECT_NAME')+".glitch.me"]
+#ALLOWED_HOSTS = [os.getenv('PROJECT_NAME')+".glitch.me"]
+ALLOWED_HOSTS = ['*']
+
 
 # Application definition
 
