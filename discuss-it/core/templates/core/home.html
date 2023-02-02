@@ -1,0 +1,47 @@
+{% extends "core/base.html" %}
+
+{% block head %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'core/style.css' %}">
+
+{% endblock %}
+{% block headlink %}
+<div class="option-buttons">
+<p>
+  {% if request.user.is_authenticated %}
+  <a href="{% url 'logout' %}">Logout</a>
+  &nbsp&nbsp
+  {% endif %}
+  <a href="{% url 'account' %}">Account</a>
+</p>
+</div>
+{% endblock %}
+{% block content %}
+
+<form action="" method="POST">
+  {% csrf_token %}
+<h2>Want to get out of the echo chamber?</h2>
+<br>
+<div class="chat-button">
+<button type="Submit" name="Chat"><strong>Chat now</strong></button>
+</div>
+</form>
+<br>
+<h2 style="height: 25px;">Talk with someone who disagrees with you</h2>
+
+<p>
+  <div class="description">
+    We'll match you up with someone on the other side of the political spectrum
+    to talk about a subject of your choice.
+  </div>
+</p>
+<h2>Why?</h2>
+<p>
+  <div class="description">
+    With social media algorithms and news outlets prioritizing engagement over accuracy,
+    it's easy to villainize the other side and forget that there's a person on the other
+    end of the screen. The goal of this project is to help give some perspective
+  </div>
+</p>
+{% endblock %}

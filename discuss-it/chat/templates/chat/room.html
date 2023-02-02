@@ -1,0 +1,155 @@
+<!-- chat/templates/chat/room.html -->
+{% extends "core/base.html" %}
+
+{% block head %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'core/chat.css' %}">
+
+
+    <meta charset="utf-8"/>
+    <title>Chat Room</title>
+{% endblock %}
+{% block content %}
+    <textarea readonly id="chat-log" cols="100" rows="20"></textarea><br>
+    <input maxlength='140' id="chat-message-input" type="text" size="100"><br>
+    <input id="chat-message-submit" type="button" value="Send">
+    <br>
+    <br>
+    <!--<form action="" method="POST">
+      {% csrf_token %}
+      <div class="report">
+      <button type="Submit" name="Report">Report</button>
+      </div>
+    </form>
+    -->
+    <button id="reportButton" onclick="reportFunction()">Report</button>
+    <form action="" method="POST">
+      {% csrf_token %}
+      <div id="reportForm">
+        <p id="hostility"></p>
+        <p id="swearing"></p>
+        <p id="discrimination"</p>
+      </div>
+    </form>
+    {{ room_name|json_script:"room-name" }}
+    <script>
+      let clicked = false;
+      function reportFunction(){
+        if(clicked == false){
+          clicked = true;
+        }
+        else{
+          clicked = false;
+        }
+        if(clicked == true){
+        const hostility_button = document.createElement("button");
+        hostility_button.id = "hostility";
+        hostility_button.name = "hostility";
+        hostility_button.type = "Submit"
+        const hostility_text = document.createTextNode("Hostility");
+        hostility_button.appendChild(hostility_text);
+
+        const swearing_button = document.createElement("button");
+        swearing_button.id = "swearing";
+        swearing_button.name = "swearing";
+        swearing_button.type = "Submit"
+        const swearing_text = document.createTextNode("Swearing");
+        swearing_button.appendChild(swearing_text);
+
+        const discrimination_button = document.createElement("button");
+        discrimination_button.id = "discrimination";
+        discrimination_button.name = "discrimination";
+        discrimination_button.type = "Submit"
+        const discrimination_text = document.createTextNode("Discrimination");
+        discrimination_button.appendChild(discrimination_text);
+
+        const parent = document.getElementById("reportForm");
+        const hostility_placeholder = document.getElementById("hostility");
+        parent.replaceChild(hostility_button, hostility_placeholder);
+
+        const swearing_placeholder = document.getElementById("swearing");
+        parent.replaceChild(swearing_button, swearing_placeholder);
+
+        const discrimination_placeholder = document.getElementById("discrimination");
+        parent.replaceChild(discrimination_button, discrimination_placeholder);
+
+      }
+      else{
+      const hostility_blank = document.createElement("p");
+      hostility_blank.id = "hostility";
+      const hostility_node = document.createTextNode("");
+      hostility_blank.appendChild(hostility_node);
+
+      const swearing_blank = document.createElement("p");
+      swearing_blank.id = "swearing";
+      const swearing_node = document.createTextNode("");
+      swearing_blank.appendChild(swearing_node);
+
+      const discrimination_blank = document.createElement("p");
+      discrimination_blank.id = "discrimination";
+      const discrimination_node = document.createTextNode("");
+      discrimination_blank.appendChild(discrimination_node);
+
+
+      const parent = document.getElementById("reportForm");
+      const hostility_button = document.getElementById("hostility");
+      parent.replaceChild(hostility_blank, hostility_button);
+
+      const swearing_button = document.getElementById("swearing");
+      parent.replaceChild(swearing_blank, swearing_button);
+
+      const discrimination_button = document.getElementById("discrimination");
+      parent.replaceChild(discrimination_blank, discrimination_button);
+
+
+    }
+    }
+        function openWindow(){
+          window.open()
+        };
+        {% for entry in log %}
+          document.querySelector('#chat-log').value += ('{{ entry }}'+'\n');
+        {% endfor %}
+        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/'
+            + roomName
+            + '/'
+        );
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            document.querySelector('#chat-log').value += (data.message + '\n');
+            var textarea = document.getElementById('chat-log');
+            textarea.scrollTop = textarea.scrollHeight;
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#chat-message-submit').click();
+            }
+        };
+
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const message = messageInputDom.value;
+            const room_username = '{{ username }}';
+            chatSocket.send(JSON.stringify(
+              {'message': message, 'room_username': room_username}
+            ));
+
+            messageInputDom.value = '';
+            room_username = '';
+        };
+    </script>
+    <br>
+{% endblock %}

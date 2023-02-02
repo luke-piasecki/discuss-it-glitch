@@ -1,0 +1,23 @@
+{% extends "core/base.html" %}
+
+{% block head %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'core/style.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<h2>Log in!</h2>
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+<label for="username">Username:</label>
+<input type="text" placeholder="Username" name = "username"><br><br><label for="password">Password:</label>
+<input type="password" name="password" placeholder="Password">
+<input type="submit" name="" value="Login">
+</form>
+<br>
+<p>
+  Don't have an account? Click <strong><a href="{% url 'sign_up' %}">here</a></strong> make one.
+</p>
+{% endblock %}

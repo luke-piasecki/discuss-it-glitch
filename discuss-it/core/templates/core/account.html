@@ -1,0 +1,19 @@
+{% extends "core/base.html" %}
+
+{% block head %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'core/style.css' %}">
+
+{% endblock %}
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+  <p>Current Username: {{ username }}</p>
+  <label for="new_username">New Username:</label>
+  <input type="text" placeholder="Enter your new username" name = "new_username"><br><br>
+  <label for="new_password">New Pasword:</label>
+  <input type="password" name="new_password" placeholder="Enter your new password">
+  <input type="submit" name="" value="Make Changes">
+</form>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "core/base.html" %}
+
+{% block head %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'core/style.css' %}">
+
+{% endblock %}
+{% block content %}
+
+<h2>Please create an account</h2>
+<form class="login" method="post">
+  <div class="myDiv">
+    {% csrf_token %}
+    <!-- Add your form.as_p method below -->
+    {{ form.as_p }}
+    <input type="submit" value="Create account"/>
+  </div>
+</form>
+<br>
+<p>
+  Already have an account? Click <strong><a href="{% url 'login' %}">here</a></strong> to log in.
+</p>
+{% endblock %}

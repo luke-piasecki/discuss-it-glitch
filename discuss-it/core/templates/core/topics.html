@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+
+{% block head %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'core/style.css' %}">
+
+{% endblock %}
+{% block content %}
+<h2>Choose your topic</h2>
+<form action="" method="POST">
+  {% csrf_token %}
+  <button type="submit" name="abortion">abortion</button>
+  <button type="submit" name="immigration">immigration</button>
+</form>
+{% endblock %}

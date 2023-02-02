@@ -1,0 +1,17 @@
+<!-- chat/templates/chat/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Rooms</title>
+</head>
+<body>
+  <h1>Setting up chatroom</h1><br>
+    <p><a href="{% url 'logout' %}">Logout</a></p>
+    <script>
+        document.querySelector('{{ room_name }}').focus();
+        var roomName = '{{ room_name }}';
+        window.location.pathname = '/chat/' + roomName + '/';
+    </script>
+</body>
+</html>
