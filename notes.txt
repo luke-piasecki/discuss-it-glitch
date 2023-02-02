@@ -1,3 +1,4 @@
 pip install django
 python3 -m pip install -U channels["daphne"]
-pip install typing-extensions==4.3.0
+pip3 install typing-extensions==4.2.0
+  probably other nubmers would work, site reccommends 4.3.10
