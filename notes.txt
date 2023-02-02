@@ -1,0 +1,3 @@
+pip install django
+python3 -m pip install -U channels["daphne"]
+pip install typing-extensions==4.3.0
