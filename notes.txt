@@ -1,4 +1,17 @@
 pip install django
 python3 -m pip install -U channels["daphne"]
 pip3 install typing-extensions==4.2.0
-  probably other nubmers would work, site reccommends 4.3.10
+#probably other nubmers would work, site reccommends 4.3.10
+pip3 install channels_redis
+
+echo bin >> /app/.gitignore
+cd /tmp
+wget http://download.redis.io/redis-stable.tar.gz
+tar xvzf redis-stable.tar.gz
+cd redis-stable
+nice make PREFIX=/app install
+
+#check if it's working
+redis-cli
+ping
+#should respond "Pong"
